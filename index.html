@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My SPA Project</title>
+  <meta property="og:description" content="A single page application featuring an introduction, a gallery of pictures & montages, and inspirational quotes." />
+  <meta property="og:image" content="https://via.placeholder.com/150" />
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/150" />
+  <style>
+    /* Global Reset and Body Setup */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                  url('https://wallpapercg.com/media/ts_orig/22899.webp') fixed;
+      background-size: cover;
+      background-position: center;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navigation */
+    nav {
+      background: rgba(20, 20, 20, 0.95);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      border-bottom: 1px solid #404040;
+    }
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #7a7a7a;
+    }
+    /* Content Sections */
+    .content-section {
+      display: none;
+      margin-top: 80px;
+      padding: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      flex: 1;
+    }
+    .content-section.active {
+      display: block;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #7a7a7a;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    /* Gallery for Pictures & Montages */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      border: 2px solid #505050;
+    }
+    /* Quote Cards */
+    .quote {
+      background: rgba(40, 40, 40, 0.9);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 1px solid #505050;
+    }
+    blockquote {
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #7a7a7a;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a data-target="intro">Introduction</a>
+    <a data-target="pictures">Pictures & Montages</a>
+    <a data-target="quotes">Quotes</a>
+  </nav>
+  
+  <!-- Introduction Section -->
+  <section id="intro" class="content-section active">
+    <h1>Welcome to My SPA</h1>
+    <p>This single page application showcases our creativity and projects. Enjoy a brief introduction, explore a gallery of pictures and montages, and get inspired by a collection of quotes.</p>
+  </section>
+  
+  <!-- Pictures & Montages Section -->
+  <section id="pictures" class="content-section">
+    <h1>Pictures & Montages</h1>
+    <div class="gallery">
+      <img src="https://via.placeholder.com/400x300?text=Picture+1" alt="Picture 1">
+      <img src="https://via.placeholder.com/400x300?text=Picture+2" alt="Picture 2">
+      <img src="https://via.placeholder.com/400x300?text=Picture+3" alt="Picture 3">
+      <img src="https://via.placeholder.com/400x300?text=Montage+1" alt="Montage 1">
+    </div>
+  </section>
+  
+  <!-- Quotes Section -->
+  <section id="quotes" class="content-section">
+    <h1>Quotes</h1>
+    <div class="quote">
+      <blockquote>"The only limit to our realization of tomorrow is our doubts of today."</blockquote>
+      <p>- Franklin D. Roosevelt</p>
+    </div>
+    <div class="quote">
+      <blockquote>"Creativity is intelligence having fun."</blockquote>
+      <p>- Albert Einstein</p>
+    </div>
+    <div class="quote">
+      <blockquote>"In the middle of difficulty lies opportunity."</blockquote>
+      <p>- Albert Einstein</p>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <p>Copyright © <span id="year"></span> My SPA Project</p>
+  </footer>
+  
+  <!-- JavaScript for SPA Navigation -->
+  <script>
+    // Handle navigation link clicks
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = e.target.getAttribute('data-target');
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        document.getElementById(target).classList.add('active');
+        history.pushState(null, null, '#' + target);
+      });
+    });
+    
+    // On initial load, activate the section based on URL hash (if any)
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        document.getElementById(hash).classList.add('active');
+      }
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>
